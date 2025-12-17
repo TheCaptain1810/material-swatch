@@ -114,6 +114,33 @@ class MaterialSwatchExtension extends BaseExtension {
       true
     );
     targetModel.unconsolidate();
+
+    // Persist assignment to backend
+    try {
+      const urn = this._urn || (targetModel && targetModel._urn);
+      let element_type = "dbid";
+      try {
+        const tree = targetModel.getInstanceTree();
+        const nodeName = tree.getNodeName(targetObjectId);
+        if (nodeName && nodeName !== String(targetObjectId)) {
+          element_type = nodeName;
+        }
+      } catch (e) {
+        // fallback to dbid
+      }
+      await fetch("/api/materials", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          element_id: String(targetObjectId),
+          element_type,
+          material_name: name,
+          urn: urn || "",
+        }),
+      });
+    } catch (err) {
+      console.error("Failed to persist material assignment:", err);
+    }
   }
 
   async _loadSwatchModel(urn) {

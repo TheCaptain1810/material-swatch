@@ -2,6 +2,7 @@
 import "./extensions/MaterialSwatchExtension.js";
 import "./extensions/MaterialSwatchPanel.js";
 import "./extensions/HistogramExtension.js";
+import "./extensions/SelectedIdExtension.js";
 
 async function getAccessToken(callback) {
   try {
@@ -27,6 +28,7 @@ export function initViewer(container) {
             "Autodesk.DocumentBrowser",
             "MaterialSwatchExtension",
             "HistogramExtension",
+            "SelectedIdExtension",
           ],
         };
         const viewer = new Autodesk.Viewing.GuiViewer3D(container, config);
