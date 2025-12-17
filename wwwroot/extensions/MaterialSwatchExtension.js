@@ -5,8 +5,11 @@ class MaterialSwatchExtension extends BaseExtension {
   constructor(viewer, options) {
     super(viewer, options);
     this._swatch = null;
-    this._urn =
-      "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6dGVzdGJ1Y2tldDE4MTAvcmFjYmFzaWNzYW1wbGVwcm9qZWN0LnJ2dA"; // Use a URN of your own existing swatch model.
+    // Try to extract swatch URN from URL hash (#...)
+    const hashUrn = window.location.hash
+      ? window.location.hash.substring(1)
+      : "";
+    this._urn = hashUrn;
     this._group = null;
     this._button = null;
     this._panel = null;
